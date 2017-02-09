@@ -18,13 +18,6 @@ namespace SkylineChallenges_CSharp.FileProcessingRefactor
             
         }
 
-        public Color(int red, int green, int blue)
-        {
-            Red = red;
-            Green = green;
-            Blue = blue;
-        }
-
         public string ToRGBString()
         {
             return "rgb(" + this.Red + ", " + this.Blue + ", " + this.Green + ")";

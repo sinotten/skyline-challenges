@@ -1,4 +1,4 @@
-# Skyline Challenges - C#
+# Skyline Challenges - CSharp
 Three coding exercises are contained in this project. All three have code for you to fill in and/or change as well as corresponding test cases.
 
 The goal of each challenge is to get all unit tests to pass successfully.  The unit tests may not be modified unless specified in the exercise.

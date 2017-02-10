@@ -28,6 +28,7 @@ namespace SkylineChallenges_CSharp.FileProcessingRefactor
                     user.Birthday = DateTime.Parse(attributes[3]);
                     user.Email = attributes[5];
 
+                    //Generations based on https://www.careerplanner.com/Career-Articles/Generations.cfm
                     string birthdayString = attributes[3];
                     DateTime birthday = DateTime.Parse(birthdayString);
                     string generation = "Unknown";

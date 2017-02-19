@@ -100,8 +100,6 @@ namespace SkylineChallenges_CSharp.RestAPIProcessing
 
         public void SetDivisionAndRegionsForUsers(IList<User> users)
         {
-            //TODO: Make filePath Dynamic
-            string filePath = Directory.GetCurrentDirectory();
             User currentUser;
             Dictionary<string, Region> regions = new Dictionary<string, Region>();
             Dictionary<string, Division> divisions = new Dictionary<string, Division>();
@@ -204,8 +202,9 @@ namespace SkylineChallenges_CSharp.RestAPIProcessing
         private void LoadExcelData(Dictionary<string, Region> regions, Dictionary<string, Division> divisions)
         {
             string currentCell = String.Empty;
+            string filePath = AppDomain.CurrentDomain.BaseDirectory + "/RestAPIProcessing/US Census Bureau Regions and Divisions.xlsx";
             Application file = new Application();
-            Workbook book = file.Workbooks.Open("C:\\Users\\nsinotte\\Desktop\\Personal Projects\\SkyLine\\skyline-challenges\\SkylineChallenges-CSharp\\RestAPIProcessing\\US Census Bureau Regions and Divisions.xlsx");
+            Workbook book = file.Workbooks.Open(filePath);
             _Worksheet sheet = book.Sheets[1];
             Range range = sheet.UsedRange;
 

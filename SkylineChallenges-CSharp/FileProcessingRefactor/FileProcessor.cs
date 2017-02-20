@@ -19,7 +19,7 @@ namespace SkylineChallenges_CSharp.FileProcessingRefactor
                 Color color = new Color();
                 string[] attributes = lines[i].Split(',');
                 
-                //Setting basic values
+                //Setting values that don't need to be altered
                 user.Id = new Guid(attributes[0]);
                 user.FirstName = attributes[1];
                 user.LastName = attributes[2];
@@ -27,17 +27,17 @@ namespace SkylineChallenges_CSharp.FileProcessingRefactor
                 user.Email = attributes[5];
 
                 //Set Generations based on https://www.careerplanner.com/Career-Articles/Generations.cfm
-                if (user.Birthday >= DateTime.Parse("1910-01-01") && user.Birthday <= DateTime.Parse("1924-12-31 23:59:59"))
+                if(DateBetweenDates(user.Birthday, DateTime.Parse("1910-01-01"), DateTime.Parse("1924-12-31 23:59:59")))
                     user.Generation = "The Greatest Generation";
-                else if (user.Birthday >= DateTime.Parse("1925-01-01") && user.Birthday <= DateTime.Parse("1945-12-31 23:59:59"))
+                else if(DateBetweenDates(user.Birthday, DateTime.Parse("1925-01-01"), DateTime.Parse("1945-12-31 23:59:59")))
                     user.Generation = "The Silent Generation";
-                else if (user.Birthday >= DateTime.Parse("1946-01-01") && user.Birthday <= DateTime.Parse("1964-12-31 23:59:59"))
+                else if (DateBetweenDates(user.Birthday, DateTime.Parse("1946-01-01"), DateTime.Parse("1964-12-31 23:59:59")))
                     user.Generation = "Baby Boomers";
-                else if (user.Birthday >= DateTime.Parse("1965-01-01") && user.Birthday <= DateTime.Parse("1979-12-31 23:59:59"))
+                else if (DateBetweenDates(user.Birthday, DateTime.Parse("1965-01-01"), DateTime.Parse("1979-12-31 23:59:59")))
                     user.Generation = "Gen X";
-                else if (user.Birthday >= DateTime.Parse("1980-01-01") && user.Birthday <= DateTime.Parse("1995-12-31 23:59:59"))
+                else if (DateBetweenDates(user.Birthday, DateTime.Parse("1980-01-01"), DateTime.Parse("1995-12-31 23:59:59")))
                     user.Generation = "Millenials";
-                else if (user.Birthday >= DateTime.Parse("1996-01-01") && user.Birthday <= DateTime.Parse("2010-12-31 23:59:59"))
+                else if (DateBetweenDates(user.Birthday, DateTime.Parse("1996-01-01"), DateTime.Parse("2010-12-31 23:59:59")))
                     user.Generation = "Generation Z";
                 else
                     user.Generation = "Unknown";
@@ -54,27 +54,27 @@ namespace SkylineChallenges_CSharp.FileProcessingRefactor
                 string creditCardNumberString = attributes[6];
                 string creditCardType = attributes[7] != null ? attributes[7].Replace("\r", "") : "";
                 
-                switch(creditCardType)
-                {
-                    case "Visa":
-                        creditCardInfo = "V";
-                        break;
-                    case "MasterCard":
-                        creditCardInfo = "MC";
-                        break;
-                    case "Discover":
-                        creditCardInfo = "D";
-                        break;
-                    case "American Express":
-                        creditCardInfo = "AMEX";
-                        break;
-                    default:
-                        creditCardInfo = "O";
-                        break;
-                }   
-                
                 if (!string.IsNullOrEmpty(creditCardNumberString))
                 {
+                    switch (creditCardType)
+                    {
+                        case "Visa":
+                            creditCardInfo = "V";
+                            break;
+                        case "MasterCard":
+                            creditCardInfo = "MC";
+                            break;
+                        case "Discover":
+                            creditCardInfo = "D";
+                            break;
+                        case "American Express":
+                            creditCardInfo = "AMEX";
+                            break;
+                        default:
+                            creditCardInfo = "O";
+                            break;
+                    }
+
                     creditCardInfo = creditCardInfo + creditCardNumberString.Substring(creditCardNumberString.Length - 4);
                     user.CreditCardInfo = creditCardInfo;
                 }
@@ -132,6 +132,22 @@ namespace SkylineChallenges_CSharp.FileProcessingRefactor
                 default:
                     return 0;
             }
+        }
+
+        /// <summary>
+        /// Check if the current date is between the start and end dates
+        /// </summary>
+        /// <param name="current">The DateTime that may be between the start and end DateTime</param>
+        /// <param name="start">The DateTime that represents the start of the range</param>
+        /// <param name="end">The DateTime that represents the end of the range</param>
+        /// <returns>True if current is between start and end</returns>
+        private bool DateBetweenDates(DateTime current, DateTime start, DateTime end)
+        {
+            if (current.Ticks >= start.Ticks && current.Ticks <= end.Ticks)
+                return true;
+            else
+                return false;
+
         }
     }
 }

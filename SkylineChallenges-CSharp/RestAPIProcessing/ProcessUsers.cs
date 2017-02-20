@@ -202,7 +202,8 @@ namespace SkylineChallenges_CSharp.RestAPIProcessing
         private void LoadExcelData(Dictionary<string, Region> regions, Dictionary<string, Division> divisions)
         {
             string currentCell = String.Empty;
-            string filePath = AppDomain.CurrentDomain.BaseDirectory + "/RestAPIProcessing/US Census Bureau Regions and Divisions.xlsx";
+            string filePath = "C:\\Users\\nsinotte\\Desktop\\Personal Projects\\SkyLine\\skyline-challenges\\SkylineChallenges-CSharp\\RestAPIProcessing\\US Census Bureau Regions and Divisions.xlsx";
+            //string filePath = AppDomain.CurrentDomain.BaseDirectory + "/RestAPIProcessing/US Census Bureau Regions and Divisions.xlsx";
             Application file = new Application();
             Workbook book = file.Workbooks.Open(filePath);
             _Worksheet sheet = book.Sheets[1];
@@ -210,7 +211,7 @@ namespace SkylineChallenges_CSharp.RestAPIProcessing
 
             for (int i = 3; i < 9; ++i)
             {
-                currentCell = range[i, 3].Value2;
+                currentCell = range[i, 3].Value2.ToString().Trim();
 
                 divisions.Add(currentCell, Division.NewEngland);
                 regions.Add(currentCell, Region.Northeast);
@@ -218,7 +219,7 @@ namespace SkylineChallenges_CSharp.RestAPIProcessing
 
             for (int i = 10; i < 13; ++i)
             {
-                currentCell = range[i, 3].Value2.ToString();
+                currentCell = range[i, 3].Value2.ToString().Trim();
 
                 divisions.Add(currentCell, Division.MidAtlantic);
                 regions.Add(currentCell, Region.Northeast);
@@ -226,7 +227,7 @@ namespace SkylineChallenges_CSharp.RestAPIProcessing
 
             for (int i = 15; i < 20; ++i)
             {
-                currentCell = range[i, 3].Value2.ToString();
+                currentCell = range[i, 3].Value2.ToString().Trim();
 
                 divisions.Add(currentCell, Division.EastNorthCentral);
                 regions.Add(currentCell, Region.Midwest);
@@ -234,7 +235,7 @@ namespace SkylineChallenges_CSharp.RestAPIProcessing
 
             for (int i = 21; i < 28; ++i)
             {
-                currentCell = range[i, 3].Value2.ToString();
+                currentCell = range[i, 3].Value2.ToString().Trim();
 
                 divisions.Add(currentCell, Division.WestNorthCentral);
                 regions.Add(currentCell, Region.Midwest);
@@ -242,7 +243,7 @@ namespace SkylineChallenges_CSharp.RestAPIProcessing
 
             for (int i = 3; i < 12; ++i)
             {
-                currentCell = range[i, 7].Value2.ToString();
+                currentCell = range[i, 7].Value2.ToString().Trim();
 
                 divisions.Add(currentCell, Division.SouthAtlantic);
                 regions.Add(currentCell, Region.South);
@@ -250,7 +251,7 @@ namespace SkylineChallenges_CSharp.RestAPIProcessing
 
             for (int i = 13; i < 17; ++i)
             {
-                currentCell = range[i, 7].Value2.ToString();
+                currentCell = range[i, 7].Value2.ToString().Trim();
 
                 divisions.Add(currentCell, Division.EastSouthCentral);
                 regions.Add(currentCell, Region.South);
@@ -258,7 +259,7 @@ namespace SkylineChallenges_CSharp.RestAPIProcessing
 
             for (int i = 18; i < 22; ++i)
             {
-                currentCell = range[i, 7].Value2.ToString();
+                currentCell = range[i, 7].Value2.ToString().Trim();
 
                 divisions.Add(currentCell, Division.WestSouthCentral);
                 regions.Add(currentCell, Region.South);
@@ -266,7 +267,7 @@ namespace SkylineChallenges_CSharp.RestAPIProcessing
 
             for (int i = 24; i < 32; ++i)
             {
-                currentCell = range[i, 7].Value2.ToString();
+                currentCell = range[i, 7].Value2.ToString().Trim();
 
                 divisions.Add(currentCell, Division.Mountain);
                 regions.Add(currentCell, Region.West);
@@ -274,7 +275,7 @@ namespace SkylineChallenges_CSharp.RestAPIProcessing
 
             for (int i = 33; i < 37; ++i)
             {
-                currentCell = range[i, 7].Value2.ToString();
+                currentCell = range[i, 7].Value2.ToString().Trim();
 
                 divisions.Add(currentCell, Division.Pacific);
                 regions.Add(currentCell, Region.West);

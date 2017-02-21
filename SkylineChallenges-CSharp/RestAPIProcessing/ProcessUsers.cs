@@ -21,14 +21,12 @@ namespace SkylineChallenges_CSharp.RestAPIProcessing
 
         public IList<User> GetUsers()
         {
-            //TODO: Get users from an API.  URL is https://fazioskyline.firebaseio.com/sampleUsers.json
-            //Note that RestSharp is installed and can be used if desired.
-            
             //List of Users to go through
             User[] users;
             int ageParse;
 
             //Arrays to help parse input
+            string cleanedResponse = string.Empty;
             string[] initialSplit;
             string[] rowBreak;
             string[] userDetail;
@@ -43,8 +41,10 @@ namespace SkylineChallenges_CSharp.RestAPIProcessing
 
             if (string.IsNullOrEmpty(response.Content))
                 throw new Exception("Response did not contain any content!");
-            
-            initialSplit = response.Content.Split('}');
+
+            cleanedResponse = response.Content.Replace("[", "");
+            cleanedResponse = cleanedResponse.Replace("]", "");
+            initialSplit = cleanedResponse.Split('}');
 
             users = new User[initialSplit.Length - 1];
 
@@ -54,41 +54,41 @@ namespace SkylineChallenges_CSharp.RestAPIProcessing
                 users[i] = new User();
 
                 //Remove additional character from the start and 
-                rowBreak = initialSplit[i].Substring(2).Split(',');
-
+                rowBreak = initialSplit[i].Replace("{", "").Split(',');
+                
                 foreach (string row in rowBreak)
                 {
                     userDetail = row.Split(':');
-                    switch(userDetail[0].ToLower())
+                    switch(userDetail[0].Replace("\"", "").ToLower())
                     {
-                        case "\"age\"":
+                        case "age":
                             int.TryParse(userDetail[1], out ageParse);
                             users[i].Age = ageParse;
                             break;
-                        case "\"almamater\"":
+                        case "almamater":
                             users[i].AlmaMater = userDetail[1].Substring(1, (userDetail[1].Length - 2));
                             break;
-                        case "\"companyname\"":
+                        case "companyname":
                             users[i].CompanyName = userDetail[1].Substring(1, (userDetail[1].Length - 2));
                             break;
-                        case "\"email\"":
+                        case "email":
                             users[i].Email = userDetail[1].Substring(1, (userDetail[1].Length - 2));
                             break;
-                        case "\"firstname\"":
+                        case "firstname":
                             users[i].FirstName = userDetail[1].Substring(1, (userDetail[1].Length - 2));
                             break;
-                        case "\"gender\"":
+                        case "gender":
                             //When instantiating a User object, gender is automatically set to F. Only need to check for M
                             if (userDetail[1].Substring(1, (userDetail[1].Length - 2)).ToUpper().Equals("M"))
                                 users[i].Gender = Gender.M;
                             break;
-                        case "\"lastname\"":
+                        case "lastname":
                             users[i].LastName = userDetail[1].Substring(1, (userDetail[1].Length - 2));
                             break;
-                        case "\"state\"":
+                        case "state":
                             users[i].State = userDetail[1].Substring(1, (userDetail[1].Length - 2));
                             break;
-                        case "\"userid\"":
+                        case "userid":
                             users[i].UserId = new Guid(userDetail[1].Substring(1, (userDetail[1].Length - 2)));
                             break;
                     }
@@ -203,7 +203,6 @@ namespace SkylineChallenges_CSharp.RestAPIProcessing
         {
             string currentCell = String.Empty;
             string filePath = "C:\\Users\\nsinotte\\Desktop\\Personal Projects\\SkyLine\\skyline-challenges\\SkylineChallenges-CSharp\\RestAPIProcessing\\US Census Bureau Regions and Divisions.xlsx";
-            //string filePath = AppDomain.CurrentDomain.BaseDirectory + "/RestAPIProcessing/US Census Bureau Regions and Divisions.xlsx";
             Application file = new Application();
             Workbook book = file.Workbooks.Open(filePath);
             _Worksheet sheet = book.Sheets[1];
